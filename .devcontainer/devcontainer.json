@@ -1,0 +1,22 @@
+{
+  "name": "Memorial slideshow",
+  "init": true,
+  "build": { "dockerfile": "../slideshow/Dockerfile", "context": "../slideshow" },
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": { "password": "vscode" }
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/memorial,type=bind",
+  "workspaceFolder": "/workspaces/memorial/slideshow",
+  "remoteUser": "vscode",
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": { "label": "Slideshow desktop", "onAutoForward": "notify" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"],
+      "settings": { "python.defaultInterpreterPath": "/opt/slideshow-venv/bin/python" }
+    }
+  },
+  "postCreateCommand": "xvfb-run -a python -m unittest discover -s tests -v"
+}
