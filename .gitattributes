@@ -1,0 +1,2 @@
+build-slideshow-go.sh text eol=lf
+slideshow-go/*.sh text eol=lf
