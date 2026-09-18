@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-input_dir="16x9 a-v final - random names"
+input_dir="output"
 
 filenum=1
 for file in "$input_dir"/*; do
