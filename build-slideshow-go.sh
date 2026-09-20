@@ -15,5 +15,5 @@ for target in windows linux; do
   GOOS="$target" GOARCH="$arch" go build -trimpath -ldflags='-s -w' \
     -o "dist/slideshow-${target}-${arch}${suffix}" .
 done
-cp THIRD_PARTY_NOTICES.txt dist/
+cp "$root/LICENSE" THIRD_PARTY_NOTICES.txt dist/
 echo "Built Windows and Linux ($arch) executables in $root/slideshow-go/dist"
