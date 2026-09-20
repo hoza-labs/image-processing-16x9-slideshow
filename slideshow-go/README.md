@@ -69,6 +69,7 @@ Options can appear before or after the directory:
 | `--seed VALUE` | Reproduce a shuffle for the same sorted file list in this Go version |
 | `--windowed` | Start with a 1280×720 client area instead of full screen |
 | `-h`, `--help` | Show usage without opening a window |
+| `--license` | Print the MIT license, all third-party notices, and the source code URL; no directory or desktop required |
 
 | Control | Action |
 | --- | --- |

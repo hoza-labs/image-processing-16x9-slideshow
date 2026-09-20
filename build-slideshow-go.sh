@@ -6,6 +6,8 @@ cd "$root/slideshow-go"
 command -v go >/dev/null 2>&1 || { echo 'Go 1.24 or newer is required on PATH.' >&2; exit 1; }
 export CGO_ENABLED=0
 mkdir -p dist
+# Keep the embedded license synchronized with the repository license.
+cp "$root/LICENSE" LICENSE
 # Run tests on the build host before cross-compiling all deliverables.
 env -u GOOS -u GOARCH go test ./...
 for target in windows linux darwin; do

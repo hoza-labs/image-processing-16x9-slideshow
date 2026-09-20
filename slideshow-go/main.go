@@ -28,12 +28,14 @@ A full-screen, shuffled photo slideshow.
   --recursive            Include subdirectories
   --seed VALUE           Reproducible shuffle
   --windowed             Start in a 1280x720 window
+  --license              Print licenses and source code URL
   -h, --help             Show help
 
 Esc/Q: quit; Space: pause; Right/N/click: next; Left/P: previous; F/F11: full screen.
 `
 
 var errHelp = errors.New("help")
+var errLicense = errors.New("license")
 
 func positiveSeconds(s string) (time.Duration, error) {
 	v, err := strconv.ParseFloat(s, 64)
@@ -61,6 +63,11 @@ func parseArgs(args []string) (options, error) {
 			switch key {
 			case "-h", "--help":
 				return o, errHelp
+			case "--license":
+				if hasValue {
+					return o, fmt.Errorf("%s does not take a value", key)
+				}
+				return o, errLicense
 			case "--recursive", "--windowed":
 				if hasValue {
 					return o, fmt.Errorf("%s does not take a value", key)
@@ -109,6 +116,10 @@ func parseArgs(args []string) (options, error) {
 
 func run(args []string, stdout, stderr io.Writer) int {
 	o, err := parseArgs(args)
+	if errors.Is(err, errLicense) {
+		fmt.Fprintf(stdout, "%s\n%s\nSource code: %s\n", mitLicense, thirdPartyLicenses, sourceURL)
+		return 0
+	}
 	if errors.Is(err, errHelp) {
 		fmt.Fprint(stdout, usage)
 		return 0
