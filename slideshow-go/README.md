@@ -12,12 +12,15 @@ bash build-slideshow-go.sh
 ```
 
 The script lives at the repository root, works from any working directory, runs
-the tests on the build host, and cross-compiles all three outputs:
+the tests on the build host, and cross-compiles all six outputs:
 
 ```text
 slideshow-go/dist/slideshow-windows-amd64.exe
+slideshow-go/dist/slideshow-windows-arm64.exe
 slideshow-go/dist/slideshow-linux-amd64
+slideshow-go/dist/slideshow-linux-arm64
 slideshow-go/dist/slideshow-darwin-amd64
+slideshow-go/dist/slideshow-darwin-arm64
 ```
 
 Dependencies download on the first build. There is no C compiler requirement.
@@ -27,11 +30,8 @@ built-in Windows system DLLs; no extra DLLs or language runtimes are needed.
 Copy the executable to the target machine, along with the redistribution notices
 in `dist/LICENSE` and `dist/THIRD_PARTY_NOTICES.txt`. Build outputs are git-ignored.
 
-The default architecture is x86-64. For ARM64 targets:
-
-```bash
-GOARCH=arm64 bash build-slideshow-go.sh
-```
+Every build includes both x86-64 (`amd64`) and ARM64 (`arm64`) for each OS,
+regardless of the build host's architecture or `GOARCH` environment variable.
 
 Linux needs an active **X11 desktop with a window manager**, or XWayland on a
 Wayland desktop, with `DISPLAY` and X authorization set normally. Windows uses
@@ -39,7 +39,7 @@ native Win32/GDI. A desktop is required; this is not a browser or terminal viewe
 
 macOS uses the X11 backend and requires [XQuartz](https://www.xquartz.org/).
 Start XQuartz and run from its terminal with `DISPLAY` and X authorization set.
-The `darwin-amd64` executable targets Intel Macs.
+The `darwin-amd64` executable targets Intel Macs; `darwin-arm64` targets Apple silicon.
 
 ## Run
 
