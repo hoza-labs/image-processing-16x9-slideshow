@@ -2,8 +2,11 @@ name: Build slideshow
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
+    # no inputs needed
 
 permissions:
   contents: read
@@ -23,6 +26,7 @@ jobs:
         working-directory: slideshow-go
         run: zip -r slideshow-go-dist.zip dist
       - name: Upload distribution
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: slideshow-go-dist
