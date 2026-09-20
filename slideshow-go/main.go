@@ -1,4 +1,4 @@
-// Slideshow is a native, shuffled photo viewer for Windows and Linux.
+// Slideshow is a shuffled photo viewer for Windows, Linux, and macOS.
 package main
 
 import (

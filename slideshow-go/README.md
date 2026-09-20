@@ -1,22 +1,23 @@
 # Go photo slideshow
 
 A native Go implementation of [slideshow](../slideshow), with standalone Windows
-and Linux executables. Photos are read in place and never modified.
+Linux, and macOS executables. Photos are read in place and never modified.
 
 ## Build
 
-Install Go 1.24 or newer and run from Git Bash on Windows or Bash on Linux:
+Install Go 1.24 or newer and run from Git Bash on Windows or Bash on Linux/macOS:
 
 ```bash
 bash build-slideshow-go.sh
 ```
 
 The script lives at the repository root, works from any working directory, runs
-the tests on the build host, and cross-compiles **both** outputs:
+the tests on the build host, and cross-compiles all three outputs:
 
 ```text
 slideshow-go/dist/slideshow-windows-amd64.exe
 slideshow-go/dist/slideshow-linux-amd64
+slideshow-go/dist/slideshow-darwin-amd64
 ```
 
 Dependencies download on the first build. There is no C compiler requirement.
@@ -24,8 +25,7 @@ Dependencies download on the first build. There is no C compiler requirement.
 Linux has no dynamic loader or shared-library dependencies. Windows calls the
 built-in Windows system DLLs; no extra DLLs or language runtimes are needed.
 Copy the executable to the target machine, along with the redistribution notices
-in `dist/THIRD_PARTY_NOTICES.txt`. No installation or supporting assets are needed
-to run it. Build outputs are git-ignored.
+in `dist/LICENSE` and `dist/THIRD_PARTY_NOTICES.txt`. Build outputs are git-ignored.
 
 The default architecture is x86-64. For ARM64 targets:
 
@@ -36,6 +36,10 @@ GOARCH=arm64 bash build-slideshow-go.sh
 Linux needs an active **X11 desktop with a window manager**, or XWayland on a
 Wayland desktop, with `DISPLAY` and X authorization set normally. Windows uses
 native Win32/GDI. A desktop is required; this is not a browser or terminal viewer.
+
+macOS uses the X11 backend and requires [XQuartz](https://www.xquartz.org/).
+Start XQuartz and run from its terminal with `DISPLAY` and X authorization set.
+The `darwin-amd64` executable targets Intel Macs.
 
 ## Run
 

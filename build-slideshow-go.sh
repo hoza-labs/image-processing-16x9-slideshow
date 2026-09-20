@@ -7,13 +7,13 @@ command -v go >/dev/null 2>&1 || { echo 'Go 1.24 or newer is required on PATH.' 
 export CGO_ENABLED=0
 arch="${GOARCH:-amd64}"
 mkdir -p dist
-# Run tests on the build host before cross-compiling both deliverables.
+# Run tests on the build host before cross-compiling all deliverables.
 env -u GOOS -u GOARCH go test ./...
-for target in windows linux; do
+for target in windows linux darwin; do
   suffix=''
   [[ "$target" != windows ]] || suffix='.exe'
   GOOS="$target" GOARCH="$arch" go build -trimpath -ldflags='-s -w' \
     -o "dist/slideshow-${target}-${arch}${suffix}" .
 done
 cp "$root/LICENSE" THIRD_PARTY_NOTICES.txt dist/
-echo "Built Windows and Linux ($arch) executables in $root/slideshow-go/dist"
+echo "Built Windows, Linux, and macOS ($arch) executables in $root/slideshow-go/dist"
