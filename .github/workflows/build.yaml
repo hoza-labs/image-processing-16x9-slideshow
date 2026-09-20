@@ -1,0 +1,31 @@
+name: Build slideshow
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: slideshow-go/go.mod
+          cache-dependency-path: slideshow-go/go.sum
+      - name: Build and test
+        run: bash build-slideshow-go.sh
+      - name: Zip distribution
+        working-directory: slideshow-go
+        run: zip -r slideshow-go-dist.zip dist
+      - name: Upload distribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: slideshow-go-dist
+          path: slideshow-go/slideshow-go-dist.zip
+          if-no-files-found: error
+          compression-level: 0
